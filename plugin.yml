@@ -1,0 +1,7 @@
+name: factionsBankBalanceHide
+authors: [martinambrus]
+main: com.github.martinambrus.factionsBankBalanceHide.FactionsBankBalanceHide
+version: 0.1
+depend: [Factions]
+website: https://www.spigotmc.org/resources/factionsbankbalancehide.17311
+description: Removes bank balances from the /baltop command of Factions and only leaves player balances in there.
