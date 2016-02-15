@@ -1,6 +1,5 @@
 package com.github.martinambrus.factionsBankBalanceHide;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.bukkit.Bukkit;
@@ -10,6 +9,9 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import com.massivecraft.factions.entity.Faction;
+import com.massivecraft.factions.entity.FactionColl;
 
 public class FactionsBankBalanceHide extends JavaPlugin implements Listener {
 
@@ -42,34 +44,34 @@ public class FactionsBankBalanceHide extends JavaPlugin implements Listener {
 			VirtualFactionCommandSender sender = new VirtualFactionCommandSender();
 			Bukkit.dispatchCommand(sender, e.getMessage().substring(1, e.getMessage().length()));
 
+			// for some reason, the first run returns an empty set, so we'll need to run this again
+			if (sender.getLastMessage().size() == 0) {
+				Bukkit.dispatchCommand(sender, e.getMessage().substring(1, e.getMessage().length()));
+			}
+
 			// now get the command output
 			Bukkit.getScheduler().runTaskLater(this, new Runnable() {
 
 				@Override
 				public void run() {
-					List<String> oldMessages = sender.getLastMessage();
-					List<String> newMessages = new ArrayList<String>();
-					for (String s : oldMessages) {
-						// don't add faction banks
-						if (!s.contains(". faction_")) {
-							if (s.contains(". ")) {
-								newMessages.add("[!pos!]" + s.substring(s.indexOf(".") + 1, s.length()));
-							} else {
-								newMessages.add(s);
-							}
-						}
-					}
+					List<String> messages = sender.getLastMessage();
+					for (String s : messages) {
+						if (s.contains(". faction_")) {
+							String factionStart = s.substring(s.indexOf(". faction_") + 10, s.length());
+							String factionID = factionStart.substring(0, factionStart.indexOf(",")).replace("_", "-");
 
-					// now send new messages
-					Integer counter = 1;
-					for (String s : newMessages) {
-						if (s.contains("[!pos!]")) {
-							// add position to this record, since it's a
-							s = s.replace("[!pos!]", counter + ".");
-							counter++;
+							if (FactionColl.get().containsId(factionID))
+							{
+								Faction faction = FactionColl.get().get(factionID);
+								s = s.replace(". faction_" + factionID.replace("-", "_"), ". [faction] " + faction.getName());
+							}
 						}
 
 						player.sendMessage(s);
+					}
+
+					for (Faction faction : FactionColl.get().getAll()) {
+						Bukkit.getLogger().info(faction.getId() + " - " + faction.getName());
 					}
 				}
 			}, 2);
