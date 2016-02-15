@@ -44,37 +44,21 @@ public class FactionsBankBalanceHide extends JavaPlugin implements Listener {
 			VirtualFactionCommandSender sender = new VirtualFactionCommandSender();
 			Bukkit.dispatchCommand(sender, e.getMessage().substring(1, e.getMessage().length()));
 
-			// for some reason, the first run returns an empty set, so we'll need to run this again
-			if (sender.getLastMessage().size() == 0) {
-				Bukkit.dispatchCommand(sender, e.getMessage().substring(1, e.getMessage().length()));
-			}
+			List<String> messages = sender.getLastMessage();
+			for (String s : messages) {
+				if (s.contains(". faction_")) {
+					String factionStart = s.substring(s.indexOf(". faction_") + 10, s.length());
+					String factionID = factionStart.substring(0, factionStart.indexOf(",")).replace("_", "-");
 
-			// now get the command output
-			Bukkit.getScheduler().runTaskLater(this, new Runnable() {
-
-				@Override
-				public void run() {
-					List<String> messages = sender.getLastMessage();
-					for (String s : messages) {
-						if (s.contains(". faction_")) {
-							String factionStart = s.substring(s.indexOf(". faction_") + 10, s.length());
-							String factionID = factionStart.substring(0, factionStart.indexOf(",")).replace("_", "-");
-
-							if (FactionColl.get().containsId(factionID))
-							{
-								Faction faction = FactionColl.get().get(factionID);
-								s = s.replace(". faction_" + factionID.replace("-", "_"), ". [faction] " + faction.getName());
-							}
-						}
-
-						player.sendMessage(s);
-					}
-
-					for (Faction faction : FactionColl.get().getAll()) {
-						Bukkit.getLogger().info(faction.getId() + " - " + faction.getName());
+					if (FactionColl.get().containsId(factionID))
+					{
+						Faction faction = FactionColl.get().get(factionID);
+						s = s.replace(". faction_" + factionID.replace("-", "_"), ". [faction] " + faction.getName());
 					}
 				}
-			}, 2);
+
+				player.sendMessage(s);
+			}
 		}
 	}
 
