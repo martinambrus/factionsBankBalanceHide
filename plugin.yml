@@ -1,7 +1,6 @@
-name: factionsBankBalanceHide
+name: factionsBankBalanceUUIDReplace
 authors: [martinambrus]
-main: com.github.martinambrus.factionsBankBalanceHide.FactionsBankBalanceHide
+main: com.github.martinambrus.factionsBankBalanceUUIDReplace.FactionsBankBalanceUUIDReplace
 version: 0.1
 depend: [Factions]
-website: https://www.spigotmc.org/resources/factionsbankbalancehide.17311
-description: Removes bank balances from the /baltop command of Factions and only leaves player balances in there.
+description: Spigot plug-in for the /baltop command of Factions which replaces UUIDs of factions' bank balances by their actual names.

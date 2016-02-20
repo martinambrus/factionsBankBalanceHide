@@ -1,4 +1,4 @@
-package com.github.martinambrus.factionsBankBalanceHide;
+package com.github.martinambrus.factionsBankBalanceUUIDReplace;
 
 import java.util.ArrayList;
 import java.util.List;

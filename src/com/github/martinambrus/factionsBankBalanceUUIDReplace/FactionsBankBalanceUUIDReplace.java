@@ -1,4 +1,4 @@
-package com.github.martinambrus.factionsBankBalanceHide;
+package com.github.martinambrus.factionsBankBalanceUUIDReplace;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import com.massivecraft.factions.entity.Faction;
 import com.massivecraft.factions.entity.FactionColl;
 
-public class FactionsBankBalanceHide extends JavaPlugin implements Listener {
+public class FactionsBankBalanceUUIDReplace extends JavaPlugin implements Listener {
 
     @Override
 	public void onEnable() {
