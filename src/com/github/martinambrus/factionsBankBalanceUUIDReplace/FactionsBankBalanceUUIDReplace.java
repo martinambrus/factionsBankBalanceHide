@@ -75,7 +75,7 @@ public class FactionsBankBalanceUUIDReplace extends JavaPlugin implements Listen
 	 */
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onBaltopPlayer(PlayerCommandPreprocessEvent e) {
-		if (e.getMessage().contains("/baltop")) {
+		if (e.getMessage().startsWith("/baltop")) {
 			e.setCancelled(true);
 			replaceUUIDs(e.getPlayer(), e.getMessage());
 		}
@@ -90,7 +90,7 @@ public class FactionsBankBalanceUUIDReplace extends JavaPlugin implements Listen
 	 */
 	@EventHandler(priority = EventPriority.LOWEST)
 	public void onBaltopConsole(ServerCommandEvent e) {
-		if (e.getCommand().contains("/baltop")) {
+		if (e.getCommand().startsWith("baltop")) {
 			try {
 				e.getClass().getDeclaredMethod("setCancelled", boolean.class).invoke(e, true);
 			} catch (NoSuchMethodException | IllegalAccessException | IllegalArgumentException | InvocationTargetException ex) {
