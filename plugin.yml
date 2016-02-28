@@ -1,6 +1,6 @@
 name: factionsBankBalanceUUIDReplace
 authors: [martinambrus]
 main: com.github.martinambrus.factionsBankBalanceUUIDReplace.FactionsBankBalanceUUIDReplace
-version: 0.1
+version: 0.1a
 depend: [Factions]
 description: Spigot plug-in for the /baltop command of Factions which replaces UUIDs of factions' bank balances by their actual names.
